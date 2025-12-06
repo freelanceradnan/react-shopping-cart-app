@@ -125,4 +125,31 @@
 .product-btn:hover {
   background: #005fcc;
 }
+.cardData-img{
+  width:100px;
+}
 
+.table-data{
+  width:100%;
+  display: grid;
+  grid-template-columns: repeat(6,1fr);
+  
+ 
+}
+.table-data td{
+  align-self: center;
+  
+}
+.table-title{
+  display: flex;
+  justify-content: space-around;
+}
+.card-data{
+  display: grid;
+  grid-template-columns: repeat(6,1fr);
+}
+.card-data td{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
