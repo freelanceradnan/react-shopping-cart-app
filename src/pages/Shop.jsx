@@ -6,7 +6,7 @@ import ProductCard from "./ProductCard";
 const Shop = () => {
     const [product,setProduct]=useState([])
     useEffect(()=>{
-     fetch('http://localhost:4000/Products')
+     fetch('https://my-json-server.typicode.com/AnifaMd/shopping-cart/products')
      .then(res=>res.json())
      .then(data=>setProduct(data))
     },[])
