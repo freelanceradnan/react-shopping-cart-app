@@ -1,41 +1,75 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
-const CardData = (props) => {
-    const {item}=props
-    const [itemQuantity,setItemQuantity]=useState(item.quantity)
-    
-    return (
-        <div>
-            <tr className="card-data">
-                <td>
-                    <img src={item.image} alt="" className='cardData-img'/>
-                </td>
-                <td>
-                    {item.title}
-                </td>
-                <td>
-                    ${item.price}
-                </td>
-                <td className="card-quantity-flex">
-                    <div className="item-minus">
-                        <figure>-</figure>
-                    </div>
-                    <input type="number" value={itemQuantity} min={1} 
-                    // onChange={()=>}
-                    />
-                    <div className="item-plus">
-                        <figure>+</figure>
-                    </div>
-                </td>
-                <td>
-                    ${item.quantity*item.price}
-                </td>
-                <td>
-                    <button>x</button>
-                </td>
-            </tr>
-        </div>
-    );
+const CardData = ({ item }) => {
+  const dispatch = useDispatch();
+  const [itemQuantity, setItemQuantity] = useState(item.quantity);
+
+  return (
+    <tr className="card-data">
+      <td>
+        <img src={item.image} alt={item.title}  className="cardData-img"/>
+      </td>
+
+      <td>{item.title}</td>
+
+      <td>${Number(item.price)}</td>
+
+      <td>
+        <button
+          onClick={() => {
+            const newQuantity = itemQuantity > 1 ? itemQuantity - 1 : 1;
+            dispatch({
+              type: "cart/modifyQuantity",
+              payload: { id: item.id, quantity: newQuantity },
+            });
+            setItemQuantity(newQuantity);
+          }}
+        >
+          -
+        </button>
+
+        <input
+          type="number"
+          value={itemQuantity}
+          min={1}
+          onChange={(e) => {
+            const newQuantity = Number(e.target.value) || 1;
+            setItemQuantity(newQuantity);
+            dispatch({
+              type: "cart/modifyQuantity",
+              payload: { id: item.id, quantity: newQuantity },
+            });
+          }}
+        />
+
+        <button
+          onClick={() => {
+            const newQuantity = itemQuantity + 1;
+            setItemQuantity(newQuantity);
+            dispatch({
+              type: "cart/modifyQuantity",
+              payload: { id: item.id, quantity: newQuantity },
+            });
+          }}
+        >
+          +
+        </button>
+      </td>
+
+      <td>${Number(item.price) * Number(itemQuantity)}</td>
+
+      <td>
+        <button
+          onClick={() =>
+            dispatch({ type: "cart/removeProduct", payload: item.id })
+          }
+        >
+          x
+        </button>
+      </td>
+    </tr>
+  );
 };
 
 export default CardData;
