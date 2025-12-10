@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import CardData from './CardData';
 
 export const Cart = () => {
-  const cart = useSelector((state) => state);
+  const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 let totalsum = 0;
 cart.forEach(item => {
